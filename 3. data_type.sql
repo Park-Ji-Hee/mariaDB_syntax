@@ -38,7 +38,7 @@ insert into author(id, email, profile_image) values(6, 'abc@naver.com', LOAD_FIL
 -- role컬럼
 (alter table author add column role varchar(10); (10개 이내로 값이 들어감))
 alter table author add column role enum('admin', 'user') not null default 'user';
-alter table author add cloumn role2 enum('admin', 'user') not null default 'user';
+alter table author add column role2 enum('admin', 'user') not null default 'user';
  --(role 컬럼은 enum에 의해서 admin이랑 user 값만 가질 수 있음 + null 설정 불가능하며 디포트 값으로 user만 갖음 )
 
 -- enum 컬럼 실습 ****

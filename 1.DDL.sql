@@ -1,8 +1,47 @@
+1. 조회 : show(데이터베이스, 테이블) describe(컬럼) select*from(value)
+    show databases;             --(데이터베이스)
+    show table 테이블명;         --(테이블)
+    describe 테이블명;           --(컬럼)
+    select *from 테이블명;       --(value)
+
+2. 생성 : create(데이터베이스, 테이블) alter(컬럼 추가) intsert into(데이터/밸류)
+    create database 데이터베이스명;        --(데이터베이스)
+    create table 테이블명;                 --(테이블)
+      -- 부모테이블 만들기
+      create table author(id INT PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), password VARCHAR(255));
+      -- 자식테이블 만들기
+      create table posts(id INT PRIMARY KEY, title VARCHAR(255), content VARCHAR(255), author_id INT, FOREIGN KEY(author_id) REFERENCES author(id));
+    alter table 테이블명 add 컬럼명 컬럼타입; --(컬럼 // 컬럼만 추가 세부값 미지정)
+    insert into 테이블명(컬럼명1, 컬럼명2) values(데이터1, 데이터2); --(컬럼 데이터 같이 추가)
+
+3. 수정 : (데이터를 제외하고는 이름변경을 제외한 수정이 필요없음)
+  alter table 테이블명 modify column 컬럼명 바꿀 조건
+    alter table author modify column email varchar(255) not null;
+  update 테이블명 set 컬럼명1 = 데이터1, 컬럼명2 = 데이터2 where id = 값;
+    update author set name = 'abc', email='abc@test.com' where id = 1;
+
+4. 삭제 : 
+  drop database 데이터베이스명;          --(데이터베이스)
+  drop table 테이블명;                  --(테이블)
+  alter table 테이블명 drop 컬럼명;      --(컬럼)
+  delete from 테이블명 where id=해당값;  --(자식테이블에서의 행 삭제)
+
+5. 이름변경 : 
+  ALTER DATABASE 원래데이터베이스 이름 MODIFY NAME = 새로운데이터베이스이름;    --(테이블)
+  alter table 원래테이블명 rename 바꿀테이블명;                       --(테이블)
+  alter table 테이블명 change column 원래컬럼명 바꿀컬럼명 컬럼타입;   --(컬럼)
+  *** 데이터는 이름변경이 자체수정과 같은 의미이므로 수정 참고
+
+6. 선택 : 
+  use board;                            --(데이터베이스 선택)
+  select 컬럼명 from 테이블명;           --(해당 컬럼만 조회)
+  select distinct 컬럼명 from 테이블명;  --(중복 제거하고 조회)
+
 -- 붙여넣기 : 우클릭
 
 -- 데이터베이스 접속  
 mairadb -u root -p (+ enter + passwd입력)
-(????? 근데 왜 로그인 요거 안되고ㅡ mysql -u root -p로 되징..?)
+(????? 근데 왜 로그인 요거 안되고ㅡ> mysql -u root -p로 되징..?)
 
 -- 스키마(database) 목록조회
 show databases;
@@ -41,14 +80,14 @@ show index from author;
 show index from posts;
 
 -- ALTER문 :테이블의 구조를 변경
--- 테이블 이름 변경
+-- 테이블 이름 변경 (rename)
 alter table posts rename post;
 -- 테이블 컬럼 주기
 alter table author add column test1 varchar(50);
 -- 테이블 컬럼 삭제
 alter table author drop column test1;
 
--- 테이블 컬럼명 변경
+-- 테이블 컬럼명 변경 (change)
 alter table post change column content contents varchar(255);
  
 -- 테이블컬럼 타입과 제약조건 변경   (*** 가장 많이 사용!)

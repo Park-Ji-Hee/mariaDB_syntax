@@ -44,7 +44,11 @@ ALTER TABLE author ADD CONSTRAINT unique_email UNIQUE (email);
 
 -- on delete cascade 테스트 -> 부모테이블의 id를 수정하면? 수정안됨
 -- (1. 조회 2. 삭제)
+1. 조회
+select * from information_schema.key_column_usage where table_name = 'post';
+2. 삭제
 alter table post add constraint post_author_fk foreign key(author_id) references author(id) on delete cascade;
+(alter table post add constraint post_author_fk foreign key(author_id) references author(id) on delete cascade;)
 -- (부모를 지워야 자식이 같이 날라감 // 같이 확인하기)
 delete from author where id =(지울id)  
 -- (정상작동 상태 : on delete만 조건 준 상태라서 'on update는 restrict' 상태로 남아있다 => post에 있는 author_id가 수정되면 안되는 상태이다)
