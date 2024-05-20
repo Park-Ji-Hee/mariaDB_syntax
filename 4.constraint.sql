@@ -31,6 +31,7 @@ alter table post add constraint post_author_fk foreign key(author_id) references
 -- increments 확인용 test  
 insert into author(email) values('hello@naver.com'); -- => 결과 확인 : increments 적용 되어 있어야 함
 
+
 --UUID
 insert into post(title) values('abc'); --(작업하려고한 사전작업)
 -- 여기서 UUID추가하는거
@@ -63,6 +64,25 @@ alter table post add constraint post_author_fk foreign key(author_id) references
 --(=> 삭제할 경우 연결되어 있던 자식테이블의 author_id는 null로 바뀌어야됨 확인해보깅)
 
 
+>>>>>>>
+  -- (1. 조회 2. 삭제)
+1. 조회
+select * from information_schema.key_column_usage where table_name = 'post';
+2. 삭제
+alter table post add constraint post_author_fk foreign key(author_id) references author(id) on delete cascade;
+(alter table post add constraint post_author_fk foreign key(author_id) references author(id) on delete cascade;)
+-- (부모를 지워야 자식이 같이 날라감 // 같이 확인하기)
+delete from author where id =(지울id)  
+-- (정상작동 상태 : on delete만 조건 준 상태라서 'on update는 restrict' 상태로 남아있다 => post에 있는 author_id가 수정되면 안되는 상태이다)
+-- ( 밑에꺼 => on update 조건 삭제하는 과정 / 케이스 없을 경우 만들기 : 글쓴이 중(글쓴 사람이 있는 인덱스로 선택)에 해당 글 쓴 사람이 있어야 함)
+-- (1. 조회 2. 항목 확인 3. )
+alter table post add constraint post_author_fk foreign key(author_id) references author(id) on delete on update cascade;
+
+-- ****(실습) delete는 set null, update cascade; 
+-- (delete는 set null)  요기는 drop하는 코드 들어가야된뎅
+-- (update cascade) 
+alter table post add constraint post_author_fk foreign key(author_id) references author(id) on delete set null on update cascade;
+--(=> 삭제할 경우 연결되어 있던 자식테이블의 author_id는 null로 바뀌어야됨 확인해보깅)
 
 
 

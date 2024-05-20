@@ -37,6 +37,12 @@
   select 컬럼명 from 테이블명;           --(해당 컬럼만 조회)
   select distinct 컬럼명 from 테이블명;  --(중복 제거하고 조회)
 
+7. 중복값 제한 / 데이터 한정 / 디폴트값+들어갈데이터값한정
+  select distinct 컬럼명 from 테이블명;  --(중복 제거하고 조회)
+  select * from 테이블명 order by 컬럼명 desc limit 인덱스번호; --(추출할데이터인덱스) 
+  alter table 테이블명 add column 컬럼명 enum('admin', 'user') not null default '디폴트값';  --(디폴트값)
+
+
 -- 붙여넣기 : 우클릭
 
 -- 데이터베이스 접속  

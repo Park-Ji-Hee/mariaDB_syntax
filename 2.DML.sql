@@ -10,7 +10,7 @@ select * from author;
 insert into posts(id, title, content, author_id) values(1, 'hello', 'hello world', 1); (=> author_id는 author에 id로 지정된 숫자로 넣어야함)
 insert into posts(id, title, content) values(1, 'hello', 'hello world');   (=> not null 조건이 없기 때문에 가능함)
 
---  제약조건 조회
+-- ****제약조건 조회
 select * from information_schema.key_column_usage where table_name = 'posts';
 (스키마(information_schema) 안에 있는 테이블(key_column_usage) //
 데이터베이스 selected 안되어 있으면 테이블 앞에 데이터 베이스(information_schema.key) 써주기)

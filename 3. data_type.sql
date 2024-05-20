@@ -66,7 +66,7 @@ alter table post add column created_time datetime;
 insert into post(id, title, created_time) values(8, 'aaa@naver.com', 1999-05-01 12:01); -- +) 1999-05-01 12:01
 
 
--- ??? 다시공부하고 코드 확인해보기 => current_timestamp 설정
+-- current_timestamp 설정
 alter table author modify column created_time datetime default current_timestamp;
  --(CURRENT_TIMESTAMP : 현재시간 자동설정 값)
 insert into author(id, email) values(14, 'aaa@naver.com'); --(??? 디폴트 값을 current_timestamp로 달고 나서 원래 기본 값들은 디폴트 적용이 안되는가)
