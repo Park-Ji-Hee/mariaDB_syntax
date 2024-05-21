@@ -25,11 +25,20 @@
         as author_id
     FROM post;
 
->> IFNULL
+>> IFNULL   *****  a의 값이 NULL이 아니면 a / NULL이면 b를 반환
     SELECT id, title, contents,              --(끝에 ',' 들어가있어야 함)
         IFNULL(author_id, '익명사용자')
         as author_id
     FROM post;
+
+>> BETWEEN A AND B
+    WHERE 컬럼명 BETWEEN 조건1 AND 조건2
+
+>> COUNT
+    COUNT(세려고하는컬럼명)
+
+>> INNER JOIN
+    left outer join author a on p.author_id = a.id;  --(ON 두테이블간연결이되는요소)
 
 
 -- 여러 기준으로 정렬하기 
@@ -71,7 +80,7 @@
     ORDER BY BOARD_ID DESC;
 
 
--- 프로그래머스 문제풀이 : 12세 이하인 여자 환자 목록 출력하기
+--12세 이하인 여자 환자 목록 출력하기
     SELECT PT_NAME, PT_NO, GEND_CD, AGE,
         IFNULL(TLNO, 'NONE')
         AS TLNO
@@ -142,7 +151,7 @@
     SELECT DATE_FORMAT(DATETIME, '%H') AS HOUR, COUNT(*) ANIMAL_OUTS GROUP BY DATETIME  --(CAST UNSIGNED 될 수 있어서 확인해야함)
 
     -- 방법1
-    SELECT HOUR(DATETIME) HOUR AS HOUR, COUNT(*)COUNT
+    SELECT HOUR(DATETIME) HOUR AS HOUR, COUNT(*)COUNT    --(HOUR()함수 == 시간 구하는 함수)
     FROM ANIMAL_OUTS
     WHERE HOUR(DATETIME) >= 9 AND HOUR(DATETIME) < 20
     GROUP BY DATETIME
@@ -160,17 +169,21 @@
     -- : (GROUP BY / HAVING) 위치 기억하기 + 어떤 것으로 GROUP BY 하는지 이해하고 풀기!!
     SELECT NAME, COUNT(*) AS COUNT
     FROM ANIMAL_INS
+    WHERE NAME IS NOT NULL
     GROUP BY NAME
     HAVING COUNT >= 2
-    WHERE NAME IS NOT NULL
     ORDER BY NAME;
 
 
  **** 다시보기
 -- 재구매가 일어난 상품과 회원 리스트 구하기  
-    SELECT USER_ID, COUNT(*) FROM ONLINE_SALE GROUP BY USER_ID,  PRODUCT_ID HAVING COUNT(*)>= ORDER BY USER_ID,  PRODUCT_ID
+    SELECT USER_ID, COUNT(*) FROM ONLINE_SALE GROUP BY USER_ID, PRODUCT_ID HAVING COUNT(*)>= ORDER BY USER_ID, PRODUCT_ID 
+
+-- 코드를 입력하세요 
+SELECT USER_ID, COUNT(*) FROM ONLINE_SALE GROUP BY ONLINE_SALE_ID, ORDER BY USER_ID, PRODUCT_ID DESC;
 
 
+# SELECT author_id, title, COUNT(*) FROM post GROUP BY author_id, title;
 
 
 

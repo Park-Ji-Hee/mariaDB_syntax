@@ -1,6 +1,16 @@
+## 두개의 테이블을 이어주는 방법
+     : join => on~ // 서브쿼리 => where~ /// ~ == author_id(at post) = id(at author)
+
+## join - group by 차이
+     : join은 두 테이블 간의 결합 // group by는 지정 컬럼과의 결합
+
+## 조건 거는 방법 *******
+     : join => on~ // 서브쿼리 또는 결합 전 상태 => where~ // group by => having~
+
+
 ********* sql : join 문제 대부분  ***********
-+) inner join   ==> ex) inner join b
-     : on 조건이 일치하는 데이터들만을 가지고 하나의 테이블로 만드는 것 (=> 교집합)
++) inner join   ==> ex)a inner join b
+     : on 조건이 일치하는 데이터들만을 가지고 하나의 테이블로 만드는 것 (=> 교집합 => 교차하는 값만 들어가게 된다)
 +) outer join   ==> ex) a left outer join b
      : 왼쪽 테이블 전부 일단 +  on 조건이 일치하는데이터 추가
      => a는 전부 다 복사 거기에 b 곁들이기 (만약 a 기준에 해당하는 b값이 없는 경우 해당 값 == null)
@@ -13,17 +23,17 @@ select * from post inner join author on author id. = post.author_id;
 
 -- inner join
 -- 두 테이블 사이에 지정된 조건에 맞는 레코드만 반환, on 조건을 통해 교집합 찾기    (결과값 : 두 테이블 합쳐져서 보임)
-SELECT * FROM POST inner join author on author.id = post.author_id;
-SELECT * FROM author a inner join post p on a.id = p.author_id;   --(as == a : 별칭)
+    SELECT * FROM POST inner join author on author.id = post.author_id;
+    SELECT * FROM author a inner join post p on a.id = p.author_id;   --(as == a : 별칭)
 -- 글쓴이가 있는 글 목록과 글쓴이의 이메일을 출력하시오.
-SELECT p.id, p.title, p.contents, a.email FROM post p inner join author a on p.author_id = a.id;
+    SELECT p.id, p.title, p.contents, a.email FROM post p inner join author a on p.author_id = a.id;
 
 
 ****** 중요! / 복습하기 
 -- 모든 글목록을 출력하고, 만약에 글쓴이가 있다면 이메일을 출력 (글쓴이가 없는 애들은 null로 출력)
 -- select * from post left outer join == select * from post left join  (왼쪽에 잇는 데이터들은 다 나오는거다)
-select p.id, p.title, p.contents, a.email from post p 
-left outer join author a on p.author_id = a.id;  --(outer 생략가능 // from 메인테이블, left joing 곁들이는테이블)
+    select p.id, p.title, p.contents, a.email from post p 
+    left outer join author a on p.author_id = a.id;  --(outer 생략가능 // from 메인테이블, left joing 곁들이는테이블)
 
 
 *********** 실습
@@ -36,7 +46,7 @@ left outer join author a on p.author_id = a.id;  --(outer 생략가능 // from �
     where a.age >= 25;
         --(filter 2개 = on(= join시킬 때 사용)~ // where(generally used)~)
 
-## left outer join 문제
+## left (outer) join 문제
 -- 2) 모든 글 목록 중에(== outer join) 글의 title과 저자가 있다면(== 저자기준) email을 출력, 2024-05-01 이후에 만들어진 글만 출력하시오
     select p.title, p.email,  --(p.created_time)
     from post p
@@ -51,8 +61,7 @@ left outer join author a on p.author_id = a.id;  --(outer 생략가능 // from �
     and p.created_time >= '2024-05-01';
 
 
--- union
-    --: 중복제외한 두 테이블의 select을 결합
+## union (중복제외) : 중복제외한 두 테이블의 select을 결합 // UNION ALL : 중복 포함
 -- 컬럼의 개수와 타입이 같아야함에 유의
 -- union all : 중복포함
     SELECT 컬럼1, 컬럼2 FROM table1 UNION SELECT 컬럽1, 컬럼2 FROM table2;
@@ -64,7 +73,7 @@ left outer join author a on p.author_id = a.id;  --(outer 생략가능 // from �
         -- 코드의 간결성과 직관성
 
 -- 서브퀴리 : select문 안에 또다른 select문을 서브쿼리라 한다
-    count(*) == 갯수 세기
+    count(*) == 갯수 세기 -> 1개의 컬럼 자체를 카운트 하는것 (=> 테이터 1개의 값이 아닌, 테이블 전체의 갯수를 각각 check 하는거)
 -- 1) select절 안에 서브쿼리
 --  author email과 해당 author거 쓴 글의 개수를 출력
     select email, (select count(*) from post p where p.author_id = a.id) as count from author a;
@@ -103,7 +112,7 @@ left outer join author a on p.author_id = a.id;  --(outer 생략가능 // from �
      == SELECT DATEFORMAT(created_time, '%Y-%m-%d') as year, count(*) FROM post WHERE created_time IS NOT NULL GROUP BY year;  --(별칭 쓴 깔끔버전)
 
 
--- HAVING : 집계 함수에 대한 조건(where : 행에 대한 조건) group by를 통해 나온 통계에 대한 조건
+-- HAVING : 집계 함수에 대한 조건(where : 행에 대한 조건) group by를 통해 나온 통계에 대한 조건    +) 집계함수 : COUNT(), SUM(), AVG() 등
     --(count ==> 전체 행의 수를 말함 // 특정 컬럼 언급X)
     SELECT author_id, count(*) FROM post GROUP BY author_id;
 -- 글을 2개 이상 쓴 사람에 대한 통계정보
