@@ -133,7 +133,8 @@ select * from post inner join author on author id. = post.author_id;
         ORDER BY Max(a.age) DESC  
         GROUP BY a.id HAVING count >=2 LIMIT 1;
           --(new issue : order by가 마지막이기 때문에 group by 이후 age 정렬 가능한지 / order by )
-    ***** 실행순서 : select -> join -> on -> where -> group -> having -> order -> limit
+
+    ************** 실행순서 : select -> join -> on -> where -> group -> having -> order -> limit
 
 
 -- 다중열 group by
