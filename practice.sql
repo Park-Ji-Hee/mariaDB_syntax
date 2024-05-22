@@ -166,7 +166,8 @@
 
 
 -- 동명 동물 수 찾기
-    -- : (GROUP BY / HAVING) 위치 기억하기 + 어떤 것으로 GROUP BY 하는지 이해하고 풀기!!
+    -- : (GROUP BY / HAVING) 위치 기억하기 + 어떤 것으로 GROUP BY 하는지 이해하고 풀기!!   
+    -- (WHERE 뒤에 들어갈거랑 + HAVING 뒤에 들어갈거) 구분짓는거 확인하기
     SELECT NAME, COUNT(*) AS COUNT
     FROM ANIMAL_INS
     WHERE NAME IS NOT NULL
